@@ -1,0 +1,144 @@
+/*WIDGET MOBILE*/
+
+.cx-webchat.cx-mobile {
+  /* height: fit-content!important; */
+  max-height: 100vh !important;
+}
+
+.cx-webchat.cx-mobile .cx-form-wrapper {
+  height: 80vh !important;
+  /* // max-height: 100vh !important; */
+}
+
+@media screen and (max-width: 480px) {
+  body {
+    background: none;
+  }
+  
+  body:not(.focus-visible) :focus:not(.focus-visible) {
+    outline: 0 !important;
+    box-shadow: none !important;
+  }
+  .cx-transcript {
+    height: 65vh !important;
+  }
+  .cx-webchat .cx-history-loading {
+    display: none !important;
+}
+
+
+.cx-loading-screen {
+  position: absolute;
+  left: 120px !important;
+}
+
+.cx-message.cx-system[data-message="Chat Started"] {
+  margin-top: 40px !important;
+
+}
+
+
+@supports (-webkit-touch-callout: none) {
+  /* CSS specific to iOS devices */ 
+  /* .icon-close{
+    top: -35px!important;
+    left: 95%!important;
+  } */
+}
+  .icon-close{
+    top: -2px!important;
+    left: 55%!important;
+  }
+  #custom-window-control {
+    top: -40px;
+    left: 93%;
+  }
+
+  .cx-webchat.cx-theme-dark .cx-transcript .cx-message.cx-you .cx-message-text {
+    /* display: inline !important; */
+    /* white-space: nowrap !important; */
+    overflow: hidden !important;
+    max-width: 100% !important;
+  }
+  .cx-webchat .cx-transcript .cx-message-group > .cx-message.cx-participant:first-child .cx-bubble {
+    margin-top: 21px !important;
+}
+  .cx-webchat div.cx-input-container {
+    position: fixed;
+    bottom: 0px;
+  }
+
+
+
+  .cx-webchat
+  .cx-transcript
+  .cx-message-group
+  > .cx-message.cx-participant.cx-you
+  .cx-bubble {
+    padding-bottom: 0 !important;
+  }
+}
+
+@media screen and (min-width: 376px) and (max-width: 480px) {
+  .cx-widget.cx-theme-dark {
+    width: 100% !important;
+    max-width: 414px !important;
+  }
+  .cx-message.cx-system[data-message="Chat Started"] {
+    left: 110px;
+  }
+}
+
+@media screen and (max-width: 320px) {
+  .cx-message.cx-system[data-message="Chat Started"] {
+    left: 70px;
+  }
+}
+
+/* MOBILE */
+.cx-webchat.cx-mobile .cx-transcript .cx-message.cx-them .cx-time {
+  top: 17px;
+}
+
+.cx-webchat.cx-mobile div.cx-input-container .cx-message-input {
+  top: 5px;
+}
+
+.cx-webchat.cx-mobile .cx-send {
+  top: -8px;
+}
+.cx-webchat.cx-mobile .cx-input-container textarea {
+  overflow: hidden !important;
+  resize: none !important;
+  width: 90% !important;
+  height: 2em !important;
+}
+
+/* .cx-webchat.cx-mobile .cx-form-wrapper {
+  height: 200vh !important;
+
+} */
+
+.cx-webchat.cx-mobile div.cx-input-container {
+  border-bottom: 1px solid #dae1e8 !important;
+}
+
+ 
+ /* .cx-webchat.cx-mobile .cx-input-container {
+  padding: 4px 0 8px 24px !important;
+  
+}  */
+
+/*
+.cx-webchat.cx-mobile .cx-message-input {
+  position: relative;
+  width: 300px !important;
+  top: 0px;
+}  */
+
+
+/* IPAD */
+
+/* @media only screen and (min-device-width: 768px) and (max-device-width: 1024px) {
+
+ } */
