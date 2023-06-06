@@ -1,4 +1,3 @@
-var cookieStore;
 function clearListCookiesIOS() {
   var cookies = document.cookie.split(";");
   for (var i = 0; i < cookies.length; i++) {
@@ -25,31 +24,37 @@ function getUrlParams() {
 function clearCookiesHandler() {
   if (/iPhone|Mac|iPad|iPod/i.test(navigator.userAgent)) {
     clearListCookiesIOS();
-    cookieStore.getAll().then((cookies) =>
+    try {
+      cookieStore.getAll().then((cookies) =>
       cookies.forEach((cookie) => {
         cookieStore.delete(
           "_genesys.widgets.webchat.state.purecloud-v2-sockets.ConversationID"
         );
-      })
-    );
+        })
+      );
+    } catch(e){}
+    
     console.log("Mac and Iphone");
   } else {
     document.cookie =
       "_genesys.widgets.webchat.state.purecloud-v2-sockets.ConversationID=; path=/; domain=.accenture.com; max-age=0";
     console.log("Windows and Android");
-    cookieStore.getAll().then((cookies) =>
-      cookies.forEach((cookie) => {
-        cookieStore.delete(
-          "_genesys.widgets.webchat.state.purecloud-v2-sockets.ConversationID"
-        );
-        cookieStore.delete(
-          "_genesys.widgets.webchat.state.purecloud-v2-sockets.LastMsgId"
-        );
-        cookieStore.delete(
-          "_genesys.widgets.webchat.state.purecloud-v2-sockets.JWtoken"
-        );
-      })
-    );
+    try {
+        cookieStore.getAll().then((cookies) =>
+        cookies.forEach((cookie) => {
+          cookieStore.delete(
+            "_genesys.widgets.webchat.state.purecloud-v2-sockets.ConversationID"
+          );
+          cookieStore.delete(
+            "_genesys.widgets.webchat.state.purecloud-v2-sockets.LastMsgId"
+          );
+          cookieStore.delete(
+            "_genesys.widgets.webchat.state.purecloud-v2-sockets.JWtoken"
+          );
+        })
+      );
+    } catch(e){}
+    
   }
 }
 
