@@ -89,31 +89,3 @@ async function foreachCallback(array) {
 
   return toreturn;
 }
-
-async function inputPolicyCoverage(data, index) {
-  let header = data.split(':')[0] + ":";
-  let splitlist = data.split(':')[1].split('•\t');
-  splitlist.shift();
-  let footer = data.split('.')[1];
-  let optionBuilder = '';
-  var html = '';
-  html += `<h6 class="document-table-header">${header}</h6><table id="document-table">
-              <tr>
-                <th>Section</th>
-                <th>Description</th>
-              </tr>
-            <tbody>`
-  await _.forEach(splitlist, (data) => {
-    let section = data.includes('–') ? data.trim().split('–')[0] : data.trim().split('-')[0];
-    let description = data.includes('–') ? data.trim().split('–')[1] : data.trim().split('-')[1];
-    description = description.includes('.') ? description.split('.')[0] : description;
-    optionBuilder += `<tr><td>${section}</td><td>${description}</td></tr>`
-  })
-  html += optionBuilder;
-  html += `</table><br>${footer}`
-  setTimeout(() => {
-    $("#cx-chat-index-" + index + " .cx-message-text").append(html);
-
-  }, 40);
-  return ``;
-}

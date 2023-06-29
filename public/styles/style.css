@@ -120,9 +120,9 @@ a:hover{
   justify-content: space-between;
   align-items: center;
   font-size: 11px;
-  height: 20px;
+  height: 50px;
   min-height: 15px;
-  max-height: 15px;
+  max-height: 50px;
   padding-top: 2px;
   color: #999999;
 }
@@ -248,3 +248,18 @@ a:hover{
 i {
   color: #b8b8b8;
 }
+
+
+#copy-btn, #toggle-iframe {
+  cursor: pointer;
+  border: 1px solid #000;
+  background-color: #f6f6f6;
+  box-shadow: none;
+  padding-right: 30px;
+  height: 30px;
+  padding: 10px;
+  color: #000;
+  border-radius: 4px;
+  padding: 6px 12px;
+}
+

@@ -5,7 +5,6 @@ var cookieParser = require('cookie-parser');
 var logger = require('morgan');
 const cors = require('cors');
 var indexRouter = require('./routes/index');
-var frontierRouter = require('./routes/frontier');
 var chatRouter = require('./routes/chat');
 var emailRouter = require('./routes/email');
 var usersRouter = require('./routes/users');
@@ -29,7 +28,6 @@ app.use(cookieParser());
 app.use(express.static(path.join(__dirname, 'public')));
 
 app.use('/', indexRouter);
-app.use('/frontier', frontierRouter);
 app.use('/chat', chatRouter);
 app.use('/email', emailRouter);
 app.use('/users', usersRouter);
