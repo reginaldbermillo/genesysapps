@@ -7,8 +7,6 @@ const cors = require('cors');
 var indexRouter = require('./routes/index');
 var chatRouter = require('./routes/chat');
 var emailRouter = require('./routes/email');
-var usersRouter = require('./routes/users');
-var tokenRouter = require('./routes/token');
 var translateRouter = require('./routes/translate');
  
 require('dotenv').config({
@@ -30,8 +28,6 @@ app.use(express.static(path.join(__dirname, 'public')));
 app.use('/', indexRouter);
 app.use('/chat', chatRouter);
 app.use('/email', emailRouter);
-app.use('/users', usersRouter);
-app.use('/token', tokenRouter);
 app.use('/translate', translateRouter);
 
 // catch 404 and forward to error handler

@@ -141,14 +141,14 @@ async function inputClaimLastnameTagParser(index, label) {
 
   var template = `  <br><br>
                     <label class='form-label' style='font-size: 12px;margin-bottom: 5px;position: relative'>Please select from the below options:</label>
-                    <div class="radio_select_number">
+                    <div>
                       <div>
                       <input type="radio" id="policy_number_radio" name="client_number" value="policy" onchange="handleChangeRadio(this,${index})">
-                      <label for="policy_number">Policy Number</label>
+                      <label for="policy_number">Policy Number and Last Name</label>
                       </div>
                       <div>
                       <input type="radio" id="claim_number_radio" name="client_number" value="claim" onchange="handleChangeRadio(this,${index})">
-                      <label for="claim_number">Claim Number</label>
+                      <label for="claim_number">Claim Number and Last Name</label>
                       </div>
                     </div>
                     
@@ -157,6 +157,10 @@ async function inputClaimLastnameTagParser(index, label) {
                       <label class='form-label' style='font-size: 12px;margin-bottom: 5px;position: relative'>Policy Number</label>
                       <br><input type='text' id='input-text0-${index}' style="width: 100%; font-weight: 400; font-size: 14px" placeholder='Input Policy Number' class='input-text-zip'></input>
                       <br><label class='form-label-policy-${index}' style='font-size: 10px;margin-bottom: 5px;position: relative; color:red!important'>Please enter your policy number.</label>
+
+                      <br><label class='form-label' style='font-size: 12px;margin-bottom: 5px;position: relative'>Last Name</label>
+                     <br><input type='text' id='input-text2-${index}' style="width: 100%; font-weight: 400; font-size: 14px" placeholder='Input Last Name' class='input-text-zip'></input>
+                     <br><label class='form-label-zip-${index}' style='font-size: 10px;margin-bottom: 5px;position: relative; color:red!important'>Please enter your last name.</label>
                     </div>
                     
                     <div id="claim_grp">
@@ -165,19 +169,23 @@ async function inputClaimLastnameTagParser(index, label) {
                       <input type='text' id='input-uc-${index}' style="pointer-events: none; width: 12%; text-align: center; font-weight: 800; font-size: 12px" value='UC' class='input-text-uc'></input>
                       <input type='text' id='input-text-${index}' style="width: 86%; font-weight: 400; font-size: 14px"  placeholder='Input Claim Number' pattern="03\d{2}-\d{7}"  class='input-text-address'></input>
                      <br><label class='form-label-address-${index}' style='font-size: 10px;margin-bottom: 5px;position: relative; color:red!important'>Please enter your claim number.</label>
+
+                     <br><label class='form-label' style='font-size: 12px;margin-bottom: 5px;position: relative'>Last Name</label>
+                     <br><input type='text' id='input-text3-${index}' style="width: 100%; font-weight: 400; font-size: 14px" placeholder='Input Last Name' class='input-text-zip'></input>
+                     <br><label class='form-label-lastname2-${index}' style='font-size: 10px;margin-bottom: 5px;position: relative; color:red!important'>Please enter your last name.</label>
                     </div>
                     
-                     <br><label class='form-label' style='font-size: 12px;margin-bottom: 5px;position: relative'>Last Name</label>
-                     <br><input type='text' id='input-text2-${index}' style="width: 100%; font-weight: 400; font-size: 14px" placeholder='Input Last Name' class='input-text-zip'></input>
-                     <br><label class='form-label-zip-${index}' style='font-size: 10px;margin-bottom: 5px;position: relative; color:red!important'>Please enter your last name.</label>
-                     <br><center><button id='button-sumbit-${index}' style='width: 200px' class='button-submit cx-submit cx-btn cx-btn-primary i18n'>SUBMIT</button></center>
+                    <center><label class='form-label-default-${index}' style='font-size: 10px;margin-bottom: 5px;position: relative; color:red!important'>Please select from the options</label>
+                    <button id='button-sumbit-${index}' style='width: 200px' class='button-submit cx-submit cx-btn cx-btn-primary i18n'>SUBMIT</button></center>
     `;
 
   setTimeout(() => {
     $("#cx-chat-index-" + index + " .cx-message-text").append(template);
     $(`.form-label-address-${index}`).hide();
     $(`.form-label-zip-${index}`).hide();
+    $(`.form-label-lastname2-${index}`).hide();
     $(`.form-label-policy-${index}`).hide();
+    $(`.form-label-default-${index}`).hide();
     $('#policy_grp').hide();
     $('#claim_grp').hide();
 
@@ -261,10 +269,19 @@ async function inputClaimLastnameTagParser(index, label) {
 
     });
 
-    
+    $(`#input-text2-${index}`).on("input", function (e) {
+      if($(this).val().length > 0) {
+        $(`.form-label-zip-${index}`).hide();
+      }
+    });
 
+    $(`#input-text3-${index}`).on("input", function (e) {
+      if($(this).val().length > 0) {
+        $(`.form-label-lastname2-${index}`).hide();
+      }
+    });
   }, 40);
-  return `#input-text-${index},#button-sumbit-${index},#input-text2-${index},#input-uc-${index},#input-text0-${index}`;
+  return `#input-text-${index},#button-sumbit-${index},#input-text2-${index},#input-uc-${index},#input-text0-${index},#input-text3-${index}`;
 }
 
 async function inputDocumentStatusListParser(data, index) {
@@ -358,8 +375,8 @@ async function inputClaimLastnameSender(data, index) {
       $(`body ${split[1]}`).click(() => {
         
         submitBtn2 = split[1];
-        inputClaimLastname(split[0], split[2], split[4], index);
-        findClaimResponse = true;
+        inputClaimLastname(split[0], split[2], split[4],split[5], index);
+        hideAdaptivecard = true;
         
       });
       
@@ -378,25 +395,44 @@ async function inputClaimLastnameSender(data, index) {
   return await true;
 }
 
-async function inputClaimLastname(value1, value2, value3, index) {
+async function inputClaimLastname(value1, value2, value3,value4, index) {
   console.log($("#policy_number_radio").is(':checked'), 'policy')
   console.log($("#claim_number_radio").is(':checked'), 'claim')
   let val1 = $(`body ${value1}`).val();
-  let val2 = $(`body ${value2}`).val();
+  let val2 = $(`body ${value2}`).val(); //last name 
   let val3 = $(`body ${value3}`).val();
+  let val4 = $(`body ${value4}`).val();
   let claimRadio = $("#claim_number_radio").is(':checked');
   let policyRadio = $("#policy_number_radio").is(':checked');
-  // val1 claimNumber
-  // val3 policy
+  // val1 claimNumber val4
+  // val3 policy val2
   console.log(index)
-  if(!claimRadio && !policyRadio) {
-    $(`.form-label-zip-${index}`).html("Please select policy or claim number.");
-    $(`.form-label-zip-${index}`).show();
-  } else if (val1 == "" && val2 == "" && claimRadio && !policyRadio) {
+  // if(policyRadio){
+  //   if(val3 == "" && val2 == ""){
+  //     $(`.form-label-zip-${index}`).html("Please enter your last name.");
+  //     $(`.form-label-zip-${index}`).show();
+  //     $(`.form-label-policy-${index}`).html("Please enter your policy number.");
+  //     $(`.form-label-policy-${index}`).show();
+  //   } else if(val2 == ""){
+  //     $(`.form-label-policy-${index}`).show();
+  //     $(`.form-label-policy-${index}`).html("Please enter your policy number.");
+  //   } else if(val3.length < 9){
+
+  //   }
+  // } else if (claimRadio){
+
+  // } else if (!claimRadio && !policyRadio){
+  //   $(`.form-label-default-${index}`).html("Please select from the options");
+  //   $(`.form-label-default-${index}`).show();
+  // }
+  if(!claimRadio && !policyRadio) { 
+    $(`.form-label-default-${index}`).html("Please select from the options");
+    $(`.form-label-default-${index}`).show();
+  } else if (val1 == "" && val4 == "" && claimRadio && !policyRadio) {
     $(`.form-label-address-${index}`).show();
     $(`.form-label-address-${index}`).html("Please enter your claim number.");
-    $(`.form-label-zip-${index}`).html("Please enter your last name.");
-    $(`.form-label-zip-${index}`).show();
+    $(`.form-label-lastname2-${index}`).html("Please enter your last name.");
+    $(`.form-label-lastname2-${index}`).show();
   } else if ((val3 == "" && val2 == "" && !claimRadio && policyRadio)) {
     $(`.form-label-zip-${index}`).html("Please enter your last name.");
     $(`.form-label-zip-${index}`).show();
@@ -414,15 +450,20 @@ async function inputClaimLastname(value1, value2, value3, index) {
   } else if (val3.length < 9 && !claimRadio && policyRadio) {
     $(`.form-label-policy-${index}`).show();
     $(`.form-label-policy-${index}`).html("Policy number entered is invalid.");
-  }  else if (val2 == "") {
+  } else if (val2 == "" && !claimRadio && policyRadio) {
     $(`.form-label-zip-${index}`).html("Please enter your last name.");
     $(`.form-label-zip-${index}`).show();
+  } else if (val4 == "" && claimRadio && !policyRadio) {
+    $(`.form-label-lastname2-${index}`).html("Please enter your last name.");
+    $(`.form-label-lastname2-${index}`).show();
   } else {
     console.log('dito baaa')
     camTyping();
     $(`.form-label-address-${index}`).hide();
     $(`.form-label-zip-${index}`).hide();
+    $(`.form-label-lastname2-${index}`).hide();
     $(`.form-label-policy-${index}`).hide();
+    $(`.form-label-default-${index}`).hide();
     await setTimeout(() => {
       $(`body ${submitBtn2}`).css("background", "#1352de");
       $(`body ${submitBtn2}`).css("color", "#ffffff");
@@ -1157,7 +1198,8 @@ function handleChangeRadio(src, index){
     $('#policy_grp').hide();
     $('#claim_grp').show();
   }
-  $(`.form-label-zip-${index}`).hide();
+  // $(`.form-label-zip-${index}`).hide();
+  $(`.form-label-default-${index}`).hide();
 }
 
 
